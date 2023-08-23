@@ -32,39 +32,36 @@ public class Zad6 {
             this.data1.add(data1);
         }
 
-        public Optional<Boolean> removeElementData1(){
+        public Optional<S> removeElementData1(){
             if(this.data1.isEmpty()){
                 return Optional.empty();
             }
             int last = this.data1.size() - 1;
-            this.data1.remove(last);
-            return Optional.of(true);
+            return Optional.of(this.data1.remove(last));
         }
 
 
         public void addData2(U data2) {
             this.data2.add(data2);
         }
-        public Optional<Boolean> removeElementData2(){
+        public Optional<U> removeElementData2(){
             if(this.data2.isEmpty()){
                 return Optional.empty();
             }
             int last = this.data2.size() - 1;
-            this.data2.remove(last);
-            return Optional.of(true);
+            return Optional.of(this.data2.remove(last));
         }
 
 
         public void addData3(V data3) {
             this.data3.add(data3);
         }
-        public Optional<Boolean> removeElementData3(){
+        public Optional<V> removeElementData3(){
             if(this.data3.isEmpty()){
                 return Optional.empty();
             }
             int last = this.data3.size() - 1;
-            this.data3.remove(last);
-            return Optional.of(true);
+            return Optional.of(this.data3.remove(last));
         }
 
         public List<S> getData1() {
