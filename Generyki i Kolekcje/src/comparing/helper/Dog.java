@@ -3,7 +3,6 @@ package comparing.helper;
 public class Dog implements Comparable<Dog> {
     private final String name;
     private final Integer ID;
-
     public Dog(String name, Integer ID) {
         this.name = name;
         this.ID = ID;
