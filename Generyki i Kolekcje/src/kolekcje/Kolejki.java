@@ -6,7 +6,8 @@ public class Kolejki {
 
 
     public static void main(String[] args) {
-        List<Integer> input = List.of(1,2,54,6,7,5,8);
+//        List<Integer> input = List.of(1,2,54,6,7,5,8);
+        List<Integer> input = Arrays.asList(1,2,3,43,45,5,6);
 
         Queue<Integer> queue = new ArrayDeque<>(input);
         System.out.println(queue);
