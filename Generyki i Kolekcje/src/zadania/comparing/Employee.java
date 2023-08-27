@@ -12,7 +12,6 @@ public class Employee implements Comparable<Employee>{
         this.age = age;
         this.salary = salary;
     }
-
     @Override
     public int compareTo(Employee employee) {
         int result = this.name.compareTo(employee.name);
@@ -29,35 +28,27 @@ public class Employee implements Comparable<Employee>{
         }
         return (int)(employee.salary - this.salary);
     }
-
     public String getName() {
         return name;
     }
-
     public String getSurname() {
         return surname;
     }
-
     public Integer getAge() {
         return age;
     }
-
     public Double getSalary() {
         return salary;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
     public void setAge(Integer age) {
         this.age = age;
     }
-
     public void setSalary(Double salary) {
         this.salary = salary;
     }
-
     @Override
     public String toString() {
         return "\nname='" + name +", surname='" + surname +", age=" + age + ", salary=" + salary;
