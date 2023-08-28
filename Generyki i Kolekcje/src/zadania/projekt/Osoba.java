@@ -51,15 +51,16 @@ public class Osoba implements Comparable<Osoba>{
         if(result != 0){
             return result;
         }
-        result = this.surname.compareTo(o.surname);
-        if(result != 0){
-            return result;
-        }
-        result = this.name.compareTo(o.name);
-        if(result != 0){
-            return result;
-        }
-        return Integer.compare(this.ID, o.ID);
+        return Integer.compare(this.arrivalID, o.arrivalID);
+//        result = this.surname.compareTo(o.surname);
+//        if(result != 0){
+//            return result;
+//        }
+//        result = this.name.compareTo(o.name);
+//        if(result != 0){
+//            return result;
+//        }
+//        return Integer.compare(this.ID, o.ID);
     }
 
     public String getName() {
