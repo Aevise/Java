@@ -1,17 +1,25 @@
 package zadania.projekt;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Osoba implements Comparable<Osoba>{
-    private String name;
-    private String surname;
+    private final String name;
+    private final String surname;
     private boolean VIP = false;
     private Integer ID = 0;
+    private static Map<String, Integer> clientRegister = new HashMap<>();
+    private Integer arrivalID;
+    private static Integer counter = 0;
 
     public Osoba(String name, String surname, boolean VIP) {
         this.name = name;
         this.surname = surname;
         this.VIP = VIP;
+        updateClientRegister((name + surname).toUpperCase());
+        arrivalID = ++counter;
+
     }
 
     public Osoba(String name, String surname) {
@@ -19,18 +27,16 @@ public class Osoba implements Comparable<Osoba>{
         this.surname = surname;
     }
 
-    public String getName() {
-        return name;
+    private void updateClientRegister(String person){
+        if(clientRegister.containsKey(person)){
+            Integer currentID = clientRegister.get(person);
+            this.setID(currentID + 1);
+            clientRegister.put(person, this.getID());
+        }else {
+            this.setID(1);
+            clientRegister.put(person, this.getID());
+        }
     }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public boolean isVIP() {
-        return VIP;
-    }
-
     public Integer getID() {
         return ID;
     }
@@ -41,9 +47,7 @@ public class Osoba implements Comparable<Osoba>{
 
     @Override
     public int compareTo(Osoba o) {
-        int isVip = this.VIP ? 1 : 0;
-        int isVIPo = o.VIP ? 1 : 0;
-        int result = isVIPo - isVip;
+        int result = Boolean.compare(o.VIP, this.VIP);
         if(result != 0){
             return result;
         }
@@ -51,7 +55,19 @@ public class Osoba implements Comparable<Osoba>{
         if(result != 0){
             return result;
         }
-        return this.ID - o.ID;
+        result = this.name.compareTo(o.name);
+        if(result != 0){
+            return result;
+        }
+        return Integer.compare(this.ID, o.ID);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 
     @Override
@@ -59,16 +75,20 @@ public class Osoba implements Comparable<Osoba>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Osoba osoba = (Osoba) o;
-        return name.equals(osoba.name) && surname.equals(osoba.surname);
+        return name.equals(osoba.name) && surname.equals(osoba.surname) && ID.equals(osoba.ID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname);
+        return Objects.hash(name, surname, ID);
     }
 
     @Override
     public String toString() {
-        return name + '_'+ surname + ID + ", VIP= " + VIP;
+        String personInfo = name + '_' + surname + "_" + ID;
+        if(VIP){
+            personInfo += "_VIP";
+        }
+        return personInfo;
     }
 }

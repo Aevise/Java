@@ -2,57 +2,80 @@ package zadania.projekt;
 
 import java.util.*;
 
-public class Shop {
+public class Shop implements Queueable{
     private PriorityQueue<Osoba> queue;
     public Shop(PriorityQueue<Osoba> queue) {
         this.queue = queue;
     }
-    private Map<Osoba, Integer> clientRegister = new HashMap<>();
-    public void addPerson(Osoba osoba){
+
+    @Override
+    public void addPersonToQueue(Osoba osoba){
+        boolean checkName = osoba.getName() == null || osoba.getName().equals("null");
+        boolean checkSurname = osoba.getSurname() == null || osoba.getSurname().equals("null");
         try {
+            if(checkName || checkSurname){
+                throw new NullPointerException();
+            }
             this.queue.add(osoba);
         }catch (NullPointerException | ClassCastException  e2){
-            System.out.println("Please provide correct information");
+            System.out.println("Please provide correct information.");
+            return;
         }
-        processClientRegister(osoba);
-        System.out.println(osoba + " came to the queue.");
+        System.out.println(osoba + " arrived at the queue.");
+        resortQueue();
     }
-    private void processClientRegister(Osoba osoba){
-        System.out.println(this.clientRegister.containsKey(osoba));
-         if(this.clientRegister.containsKey(osoba)){
-            Integer currentID = clientRegister.get(osoba);
-            osoba.setID(currentID + 1);
-            clientRegister.put(osoba, osoba.getID());
-        }else {
-            osoba.setID(1);
-            clientRegister.put(osoba, osoba.getID());
-        }
-    }
+    @Override
     public void processQueue(){
-        if(queue.poll() == null){
-            System.out.println("Queue is empty");
+        Osoba personLeaving = queue.poll();
+        if(personLeaving == null){
+            System.out.println("Queue is empty. Take some rest!");
+            return;
         }
+        System.out.println(personLeaving + " please come to the store!");
     }
-    public void leaveQueue(String name, String surname, Integer ID){
+    @Override
+    public void leaveQueue(String person){
+        String[] parts = person.split("_");
+        if(parts.length < 3 ){
+            System.out.println("Incorrect input.");
+            return;
+        }
+        String name = parts[0].substring(0,1).toUpperCase() + parts[0].substring(1).toLowerCase();
+        String surname = parts[1].substring(0,1).toUpperCase() + parts[1].substring(1).toLowerCase();
         Osoba osobaToRemove = new Osoba(name, surname);
-        osobaToRemove.setID(ID);
+        try{
+            int ID = Integer.parseInt(parts[2]);
+            osobaToRemove.setID(ID);
+        }catch (NumberFormatException ignored){
+        }
         for (Osoba osoba : queue) {
-            System.out.println("Now processing: " + osoba);
-            if(osoba.equals(osobaToRemove) && osoba.getID().equals(ID)){
+            if(osoba.equals(osobaToRemove)){
                 queue.remove(osoba);
                 System.out.println(osoba + " has left the Queue!");
+                resortQueue();
                 return;
             }
         }
         System.out.println(osobaToRemove + " was not found in the Queue");
-
     }
 
+    public void addExistingQueue(PriorityQueue<Osoba> queue){
+        if(this.queue.isEmpty()){
+            this.queue = new PriorityQueue<>(queue);
+        }
+        else {
+            this.queue.addAll(queue);
+        }
+        resortQueue();
+    }
+    @Override
+    public void resortQueue() {
+        this.queue = new PriorityQueue<>(this.queue);
+    }
 
     @Override
     public String toString() {
-        return "Shop{" +
-                "queue=" + queue +
-                '}';
+        PriorityQueue<Osoba> resortQueue = new PriorityQueue<>(this.queue);
+        return "Queue: " + resortQueue;
     }
 }
