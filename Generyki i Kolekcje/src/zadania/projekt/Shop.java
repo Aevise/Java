@@ -1,81 +1,50 @@
 package zadania.projekt;
 
+import zadania.projekt.util.InputHandler;
+
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class Shop implements Queueable{
-    private PriorityQueue<Osoba> queue;
-    public Shop(PriorityQueue<Osoba> queue) {
-        this.queue = queue;
+public class Shop {
+    private QueueToShop queue;
+    private final InputHandler inputHandler = new InputHandler();
+
+    public Shop() {
+        this.queue = new QueueToShop();
     }
 
-    @Override
-    public void addPersonToQueue(Osoba osoba){
-        boolean checkName = osoba.getName() == null || osoba.getName().equals("null");
-        boolean checkSurname = osoba.getSurname() == null || osoba.getSurname().equals("null");
-        try {
-            if(checkName || checkSurname){
-                throw new NullPointerException();
+    public void openShop() {
+        Scanner scanner = new Scanner(System.in);
+        String command = "";
+
+        Pattern pattern = Pattern.compile("\\((.*?)\\)"); // znajduje wszystko w środku
+        while (!command.equals("end")) {
+            command = scanner.nextLine().trim().toUpperCase();
+            Matcher matcher = pattern.matcher(command);
+
+            if (command.startsWith("ADD") && command.endsWith(")")) {
+                if (command.contains("PERSON(") && matcher.find()) {
+                    String personalInformation = matcher.group(1);
+                    try {
+                        String[] extractedInfo = inputHandler.extractPersonalInformation(personalInformation);
+                        boolean isVip = extractedInfo[2] == "VIP";
+                        queue.addPersonToQueue(new Osoba(extractedInfo[0], extractedInfo[1], isVip));
+                    } catch (RuntimeException e) {
+                        System.out.println("Wrong input!");
+                    }
+                }
+            } else if (command.startsWith("LEAVE")) {
+                if (command.contains("PERSON(") && matcher.find()) {
+                    String personalInformation = matcher.group(1);
+                    queue.leaveQueue(personalInformation);
+                }
+            } else if (command.equals("PROCESS")) {
+                queue.processQueue();
+            } else {
+                System.out.println("Wrong command!");
             }
-            this.queue.add(osoba);
-        }catch (NullPointerException | ClassCastException  e2){
-            System.out.println("Please provide correct information.");
-            return;
+            System.out.println(queue);
         }
-        System.out.println(osoba + " arrived at the queue.");
-        resortQueue();
-    }
-    @Override
-    public void processQueue(){
-        Osoba personLeaving = queue.poll();
-        if(personLeaving == null){
-            System.out.println("Queue is empty. Take some rest!");
-            return;
-        }
-        System.out.println(personLeaving + " please come to the store!");
-    }
-    @Override
-    public void leaveQueue(String person){
-        String[] parts = person.split("_");
-        if(parts.length < 3 ){
-            System.out.println("Incorrect input.");
-            return;
-        }
-        String name = parts[0].substring(0,1).toUpperCase() + parts[0].substring(1).toLowerCase();
-        String surname = parts[1].substring(0,1).toUpperCase() + parts[1].substring(1).toLowerCase();
-        Osoba osobaToRemove = new Osoba(name, surname);
-        try{
-            int ID = Integer.parseInt(parts[2]);
-            osobaToRemove.setID(ID);
-        }catch (NumberFormatException ignored){
-        }
-        for (Osoba osoba : queue) {
-            if(osoba.equals(osobaToRemove)){
-                queue.remove(osoba);
-                System.out.println(osoba + " has left the Queue!");
-                resortQueue();
-                return;
-            }
-        }
-        System.out.println(osobaToRemove + " was not found in the Queue");
-    }
-
-    public void addExistingQueue(PriorityQueue<Osoba> queue){
-        if(this.queue.isEmpty()){
-            this.queue = new PriorityQueue<>(queue);
-        }
-        else {
-            this.queue.addAll(queue);
-        }
-        resortQueue();
-    }
-    @Override
-    public void resortQueue() {
-        this.queue = new PriorityQueue<>(this.queue);
-    }
-
-    @Override
-    public String toString() {
-        PriorityQueue<Osoba> resortQueue = new PriorityQueue<>(this.queue);
-        return "Queue: " + resortQueue;
     }
 }

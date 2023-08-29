@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Osoba implements Comparable<Osoba>{
+public class Osoba implements Comparable<Osoba> {
     private final String name;
     private final String surname;
     private boolean VIP = false;
@@ -27,16 +27,17 @@ public class Osoba implements Comparable<Osoba>{
         this.surname = surname;
     }
 
-    private void updateClientRegister(String person){
-        if(clientRegister.containsKey(person)){
+    private void updateClientRegister(String person) {
+        if (clientRegister.containsKey(person)) {
             Integer currentID = clientRegister.get(person);
             this.setID(currentID + 1);
             clientRegister.put(person, this.getID());
-        }else {
+        } else {
             this.setID(1);
             clientRegister.put(person, this.getID());
         }
     }
+
     public Integer getID() {
         return ID;
     }
@@ -48,7 +49,7 @@ public class Osoba implements Comparable<Osoba>{
     @Override
     public int compareTo(Osoba o) {
         int result = Boolean.compare(o.VIP, this.VIP);
-        if(result != 0){
+        if (result != 0) {
             return result;
         }
         return Integer.compare(this.arrivalID, o.arrivalID);
@@ -87,7 +88,7 @@ public class Osoba implements Comparable<Osoba>{
     @Override
     public String toString() {
         String personInfo = name + '_' + surname + "_" + ID;
-        if(VIP){
+        if (VIP) {
             personInfo += "_VIP";
         }
         return personInfo;
