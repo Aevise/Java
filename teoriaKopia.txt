@@ -1,0 +1,28 @@
+//IO Stream - sekwencyjne operowanie na danych
+//InputStream/OutputStream - operacje na pojedynczych bajtach
+//Reader/Writer - operacje na pojedynczych znakach
+//BufferedStream - operacje na kilkunastu ?znakach?bajtach?
+
+//Reader - klasa abstrakcyjna do dziedziczenia przez inne klasy
+//FileReader - klasa, ktora czyta znaki z pliku | niski poziom
+//InputStreamReader - klasa czytająca znaki z przekazanego InputStreama | Wysoki poziom (przyjmuje inny Stream jako argument)
+//BufferedReader - czytająca, grupująca | wyoski poziom
+
+//Writer - klasa abstrakcyjna do dziedziczeia
+//FileWriter - zapisuje dane w formie znakowe | niski poziom
+//OutputStreamReader - zapisuje znaki z przekazanego OutputStreama |Wysoki poziom
+//BufferedWriter - zapisujący, grupujący | wysoki poziom
+//PrintWriter - ułatwia formatowanie treści | wysoki poziom
+//
+//InputStream - klasa abstrakcyjna
+//FileInputStream - odczytuje informacje z plików w postaci bajtów | niski poziom
+//BufferedInputStream - klasa buforujaca odczyt bajtów | Wysoki poziom
+//ObjectInputStream - jest w stanie odczytać z pliku obiekt Javy | Wysoki poziom
+//
+//OutputStream - klasa abstrakcyjna
+//FileOutputStream - klasa zapisujaca pojedyncze bajty | niski poziom
+//BufferedOutputStrean - klasa buforujaca zapis bajtów, poprawia wydajnosc |wysoki poziom
+//ObjectOutputStream - zapisuje obiekt Javy do OutputStream obiektów Java | Wysoki
+
+//PrintStream - ułatwia drukowania treści | wysoki poziom
+//.flush() - upewnienie sie, ze dane zapisaly sie do pliku
