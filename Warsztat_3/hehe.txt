@@ -1,3 +1,0 @@
-15Car{name='Mruczek'}
-not hehe
-hehe: [Car{name='Wojtek'}]
