@@ -6,10 +6,10 @@ import projekt.base.Purchase;
 import projekt.base.Samochod;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class HandleData {
@@ -82,5 +82,119 @@ public class HandleData {
                 purchase.getLokalizacja().getCity(),
                 purchase.getDate()
         );
+    }
+
+    public static String convertToCSV(String... args) {
+        StringBuilder CSV = new StringBuilder("");
+        for (String arg : args) {
+            CSV.append(arg).append(",");
+        }
+        return CSV.deleteCharAt(CSV.length() - 1).toString();
+    }
+
+    static Map<String, Map<BigDecimal, BigDecimal>> getAverageIncomeByModel(Map.Entry<String, Map<String, List<Purchase>>> companySales) {
+        Map<String, BigDecimal> totalIncomeByModel = extractTotalIncomeByModel(companySales);
+        Map<String, BigDecimal> amountOfSoldModels = extractAmountOfSoldModels(companySales);
+
+        Map<String, Map<BigDecimal, BigDecimal>> averagePriceByModel = new LinkedHashMap<>();
+        for (String key : totalIncomeByModel.keySet()) {
+            BigDecimal totalIncome = totalIncomeByModel.get(key);
+            BigDecimal amountSold = amountOfSoldModels.get(key);
+
+            if (amountSold != null && amountSold.compareTo(BigDecimal.ZERO) != 0) {
+                Map<BigDecimal, BigDecimal> averagePriceToAmountSold = new LinkedHashMap<>();
+                BigDecimal averagePrice = totalIncome.divide(amountSold, 2, RoundingMode.HALF_UP);
+                averagePriceToAmountSold.put(averagePrice, amountSold);
+                averagePriceByModel.put(key, averagePriceToAmountSold);
+            }
+        }
+        return averagePriceByModel;
+    }
+
+    private static Map<String, BigDecimal> extractAmountOfSoldModels(Map.Entry<String, Map<String, List<Purchase>>> companySales) {
+        return companySales.getValue().entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> BigDecimal.valueOf(entry.getValue()
+                                .size())));
+    }
+
+    private static Map<String, BigDecimal> extractTotalIncomeByModel(Map.Entry<String, Map<String, List<Purchase>>> companySales) {
+        return companySales.getValue().entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry
+                                .getValue()
+                                .stream()
+                                .map(purchase -> purchase.getSamochod().getCar_price())
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                ));
+    }
+
+    static Map<String, Map<String, List<Purchase>>> groupSalesByCompanyAndModel(Map<String, List<Purchase>> purchaseByCompany) {
+        return purchaseByCompany.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream()
+                                .collect(Collectors.groupingBy(purchase -> purchase.getSamochod().getCar_model()))
+                ));
+    }
+
+    static List<String> prepareRaportEx3(Map<String, Map<String, List<Purchase>>> salesByCompanyAndModel) {
+        //        for (Map.Entry<String, Map<String, List<Purchase>>> companySales : salesByCompanyAndModel.entrySet()) {
+//            Map<String, Map<BigDecimal, BigDecimal>> averageIncomeByModel = getAverageIncomeByModel(companySales);
+//            for (Map.Entry<String, Map<BigDecimal, BigDecimal>> stringMapEntry : averageIncomeByModel.entrySet()) {
+//                Map<BigDecimal, BigDecimal> innerMap = stringMapEntry.getValue();
+//                for (Map.Entry<BigDecimal, BigDecimal> entry : innerMap.entrySet()) {
+//                    System.out.println(convertToCSV(String.valueOf(id.getAndIncrement()), companySales.getKey(), stringMapEntry.getKey(), entry.getKey().toString(), entry.getValue().toString()));
+//                }
+//            }
+//        }
+        AtomicInteger id = new AtomicInteger(1);
+        return salesByCompanyAndModel.entrySet().stream()
+                .flatMap(companySales -> getAverageIncomeByModel(companySales)
+                        .entrySet().stream()
+                        .flatMap(stringMapEntry -> stringMapEntry.getValue().entrySet().stream()
+                                .map(entry -> convertToCSV(String.valueOf(id.getAndIncrement()),
+                                        companySales.getKey(),
+                                        stringMapEntry.getKey(),
+                                        entry.getKey().toString(),
+                                        entry.getValue().toString()))))
+                .collect(Collectors.toList());
+    }
+
+    public static List<String> prepareRaportEx4(Map<LocalDate, Long> collect) {
+        AtomicInteger id = new AtomicInteger(1);
+        return collect.entrySet().stream()
+                .map(entry ->
+                        convertToCSV(String.valueOf(
+                                        id.getAndIncrement()),
+                                entry.getKey().toString(),
+                                entry.getValue().toString()))
+                .toList();
+    }
+
+    public static Map<LocalDate, Long> groupAmountOfSoldCarsByDate(List<Purchase> purchaseData) {
+        Map<LocalDate, Long> amountOfSoldCarsByDate = purchaseData.stream()
+                .collect(Collectors.groupingBy(
+                        Purchase::getDate,
+                        TreeMap::new,
+                        Collectors.counting()
+                ));
+        return amountOfSoldCarsByDate;
+    }
+
+
+    static Map<LocalDate, Long> extractSoldCarsInDay(Map<LocalDate, Long> collect) {
+        return collect.entrySet()
+                .stream()
+                .sorted(Map.Entry.<LocalDate, Long>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> entry.getValue(),
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
     }
 }

@@ -24,7 +24,6 @@ public class Purchase {
                 "id=" + id +
                 ", osoba=" + osoba +
                 ", samochod=" + samochod +
-                ", lokalizacja=" + lokalizacja +
                 ", date=" + date +
                 '}';
     }

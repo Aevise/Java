@@ -1,7 +1,6 @@
 package projekt.base;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 
 public class Samochod implements Comparable<Samochod> {
     String color;
