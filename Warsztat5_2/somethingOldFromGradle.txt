@@ -1,0 +1,57 @@
+defaultTasks 'firstTask', 'thirdTask'
+
+task firstTask{
+    group 'Aevise group'
+    doLast {
+        println 'zajavka'
+        println 'homeDir: ' + gradle.gradleHomeDir
+    }
+}
+
+task secondTask{
+    group 'Aevise group'
+    description 'My description'
+    println 'always printed'
+}
+
+task thirdTask{
+    group 'Aevise group'
+    doFirst {
+        println 'do First: thirdTask'
+    }
+
+    doLast {
+        println 'do Last: thirdTask'
+    }
+}
+
+task clean{
+    group 'Aevise group'
+    doLast {
+        println 'clean something'
+    }
+}
+
+task compile{
+    group 'Aevise group'
+    doLast {
+        println 'Compiling some Jave code... hehe'
+    }
+}
+
+task afterCompile(dependsOn: 'compile'){
+    group 'Aevise group'
+    doLast {
+        println 'Something after compilation...'
+    }
+}
+
+task afterClean{
+    group 'Aevise group'
+    doLast {
+        println 'Something after cleaning...'
+    }
+}
+
+afterClean.dependsOn 'clean'
+

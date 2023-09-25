@@ -1,0 +1,11 @@
+apply plugin: 'java'
+version '0.1.0'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+jar{
+    archiveBaseName = 'Aevise-jar'
+    manifest {
+        attributes 'Main-Class: pl.Aevise.code.Main'
+    }
+}
