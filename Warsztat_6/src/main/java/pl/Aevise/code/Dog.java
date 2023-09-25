@@ -2,10 +2,8 @@ package pl.Aevise.code;
 
 import lombok.*;
 
-@Getter
+@Data
 @AllArgsConstructor(staticName = "of")
-@ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @With
 public class Dog {
     @EqualsAndHashCode.Include
@@ -18,7 +16,8 @@ public class Dog {
     @ToString.Exclude
     private Food food;
 
-    public void consume(@NonNull String somethingToEat){
+
+    public void consume(@NonNull String somethingToEat) {
         System.out.println(somethingToEat);
     }
 

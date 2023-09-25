@@ -1,6 +1,15 @@
 package pl.Aevise.code;
 
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.SneakyThrows;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Main {
     public static void main(String[] args) {
         Owner Tomasz = new Owner();
@@ -14,5 +23,12 @@ public class Main {
         System.out.println(burek1.equals(burek2));
         System.out.println(burek1.equals(burek3));
         System.out.println(burek2.equals(burek3));
+
+        fileSize(Paths.get("Not hehe"));
+    }
+
+    @SneakyThrows
+    public static void fileSize(Path path) {
+        Files.size(path);
     }
 }
