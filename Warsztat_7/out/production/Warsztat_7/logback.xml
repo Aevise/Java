@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"> <!-- name moze byc dowolny np. mozemy miec kilka roznych sposobow drukowania na konsoli -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} : %method:%line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="pl.Aevise.logger1" level="warning" addivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="pl.Aevise.logger2" level="warning" addivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
