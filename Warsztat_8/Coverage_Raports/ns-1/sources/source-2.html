@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1250"> 
+  <title>Coverage Report > Calculator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pl.Aevise.code</a>
+</div>
+
+<h1>Coverage Summary for Class: Calculator (pl.Aevise.code)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Calculator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88,9%
+  </span>
+  <span class="absValue">
+    (8/9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pl.Aevise.code;
+&nbsp;
+&nbsp;public class Calculator {
+&nbsp;    private final IAnotherCalculator anotherCalculator;
+&nbsp;
+<b class="fc">&nbsp;    public Calculator(IAnotherCalculator anotherCalculator) {</b>
+<b class="fc">&nbsp;        this.anotherCalculator = anotherCalculator;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static int subtract(int num1, int num2) {
+<b class="fc">&nbsp;        return num1 - num2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static int multiply(int num1, int num2) {
+<b class="fc">&nbsp;        return num1 * num2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static int divide(int num1, int num2) {
+<b class="fc">&nbsp;        if(num2 &lt;= 0  || num1 &lt;= 0){</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return num1 / num2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int add(int num1, int num2) {
+<b class="fc">&nbsp;        int run = anotherCalculator.run();</b>
+<b class="fc">&nbsp;        return num1 + num2 + run;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-09-27 20:56</div>
+</div>
+</body>
+</html>
