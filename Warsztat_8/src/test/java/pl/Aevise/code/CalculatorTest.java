@@ -64,11 +64,11 @@ public class CalculatorTest {
         Integer result = Calculator.subtract(num1, num2);
 //        then
         Assertions.assertEquals(expected, result);
-//        Assertions.assertAll(
-//                ()-> Assertions.assertEquals(5,5, () -> "My message 1"),
-//                ()-> Assertions.assertEquals(7,1, () -> "My message 2"),
-//                ()-> Assertions.assertEquals(6,5, () -> "My message 3")
-//        ); rzadko sie pisze taki test
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(5,5, () -> "My message 1"),
+                ()-> Assertions.assertEquals(7,1, () -> "My message 2"),
+                ()-> Assertions.assertEquals(6,5, () -> "My message 3")
+        );
 //        NumberFormatException throwable = Assertions.
 //                assertThrows(NumberFormatException.class, () -> Calculator.add(num1, test));
     }

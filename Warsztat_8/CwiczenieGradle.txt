@@ -29,4 +29,30 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+jacocoTestReport {
+    dependsOn test
+        reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtmlCustom')
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.5
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
 }
