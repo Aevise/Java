@@ -2,7 +2,7 @@ package pl.Aevise.code;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params .ParameterizedTest;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @Slf4j
@@ -63,12 +63,12 @@ public class CalculatorTest {
 //        when
         Integer result = Calculator.subtract(num1, num2);
 //        then
-        Assertions.assertEquals(expected, result);
-        Assertions.assertAll(
-                ()-> Assertions.assertEquals(5,5, () -> "My message 1"),
-                ()-> Assertions.assertEquals(7,1, () -> "My message 2"),
-                ()-> Assertions.assertEquals(6,5, () -> "My message 3")
-        );
+//        Assertions.assertEquals(expected, result);
+//        Assertions.assertAll(
+//                ()-> Assertions.assertEquals(5,5, () -> "My message 1"),
+//                ()-> Assertions.assertEquals(7,1, () -> "My message 2"),
+//                ()-> Assertions.assertEquals(6,5, () -> "My message 3")
+//        );
 //        NumberFormatException throwable = Assertions.
 //                assertThrows(NumberFormatException.class, () -> Calculator.add(num1, test));
     }

@@ -1,12 +1,19 @@
 package pl.Aevise.code.zad;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Value;
+import lombok.With;
 
 @Builder
-@Data
+@Value
 @With
-public class User {
-    private String name;
-    private String surname;
-    private String email;
+public class User implements Comparable<User> {
+    String name;
+    String surname;
+    String email;
+
+    @Override
+    public int compareTo(User o) {
+        return this.name.compareTo(o.getName());
+    }
 }

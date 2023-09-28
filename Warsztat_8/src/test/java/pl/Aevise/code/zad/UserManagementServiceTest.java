@@ -11,6 +11,14 @@ import java.util.stream.Stream;
 public class UserManagementServiceTest {
     private UserManagementService userManagementService;
 
+    private static User someUser() {
+        return User.builder()
+                .name("name")
+                .surname("surname")
+                .email("email@gmail.com")
+                .build();
+    }
+
     @BeforeEach
     void init() {
         this.userManagementService = new UserManagementService();
@@ -182,13 +190,5 @@ public class UserManagementServiceTest {
         //when, then
         Throwable exception = Assertions.assertThrows(RuntimeException.class, () -> userManagementService.delete(user1.getEmail()));
         Assertions.assertEquals(String.format("User with email: [%s] doesn't exist", user1.getEmail()), exception.getMessage());
-    }
-
-    private static User someUser() {
-        return User.builder()
-                .name("name")
-                .surname("surname")
-                .email("email@gmail.com")
-                .build();
     }
 }
