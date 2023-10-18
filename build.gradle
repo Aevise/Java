@@ -1,0 +1,39 @@
+plugins {
+    id "java"
+}
+
+group = "pl.Aevise"
+version = "1.0-SNAPSHOT"
+sourceCompatibility = "17"
+
+ext{
+    logbackVersion = '1.4.8'
+    lombokVersion = '1.18.28'
+    springVersion = '6.0.11'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    implementation "org.springframework:spring-core:$springVersion"
+    implementation "org.springframework:spring-beans:$springVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+    implementation "org.springframework:spring-context-support:$springVersion"
+    implementation "org.springframework:spring-expression:$springVersion"
+
+
+
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
