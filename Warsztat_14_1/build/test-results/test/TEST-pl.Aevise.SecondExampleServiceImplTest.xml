@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pl.Aevise.SecondExampleServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-20T15:19:22" hostname="K-20407" time="1.355">
+  <properties/>
+  <testcase name="sampleMethod_whenTwoValuesToAdd()" classname="pl.Aevise.SecondExampleServiceImplTest" time="1.355"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
