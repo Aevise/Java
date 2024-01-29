@@ -1,0 +1,1 @@
+ciekawe co sie stanie jak bede chcial obsluzyc taki plik za pomoca imagebuffera
